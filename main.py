@@ -4,6 +4,7 @@ from fastapi.responses import PlainTextResponse
 import requests
 import logging
 from fastapi import Query
+from agent import get_response
 
 logging.basicConfig(level=logging.INFO)
 app = FastAPI()
@@ -43,8 +44,8 @@ async def receive_webhook(request: Request):
                             user_text = message["text"]["body"]
 
                             # Your append logic (or echo: reply_text = user_text)
-                            reply_text = user_text + " - appended_number_123"
-
+                            reply_text = get_response(user_text)
+                            print(reply_text)
                             # Send reply
                             send_message(from_number, reply_text)
 
