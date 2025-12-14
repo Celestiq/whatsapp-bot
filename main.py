@@ -1,5 +1,6 @@
 import os
 from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import PlainTextResponse
 import requests
 import logging
 from fastapi import Query
@@ -22,7 +23,7 @@ async def verify_webhook(
     
     if hub_mode == "subscribe" and hub_verify_token == VERIFY_TOKEN:
         logging.info("Verification successful!")
-        return hub_challenge  # Plain text response
+        return PlainTextResponse(content=hub_challenge)  # Plain text response
     else:
         logging.info("Verification failed!")
         raise HTTPException(status_code=403, detail="Forbidden")
